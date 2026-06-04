@@ -270,6 +270,36 @@ void exibircontamesa()
     getline(cin, pausa);
 }
 
+void visualizarMesasAtivas()
+{
+    system ("cls");
+    exibircabecalho("MESAS COM PEDIDOS ATIVOS");
+
+    bool exibirMesaOcupada = false;
+
+    for (int i = 0; i <=25 ; i++)
+    {
+        if (mesas[i].totalitens > 0)
+        {
+            cout <<"[ MESA " << i << " ] -> STATUS: OCUPADA\n";
+            cout <<"  -Itens pedidos: " << mesas[i].totalitens <<"\n";
+            cout <<"  -Valor atual da conta: R$ " << mesas[i].totalconta << "\n";
+            cout <<" -----------------------------------------\n";
+
+            exibirMesaOcupada = true;
+        }
+    }
+    
+    if(!exibirMesaOcupada){
+        cout <<"\n No momento, total as 25 mesas estao LIVRES!\n";
+        cout <<"Nao ha nenhum cliente consumindo no salao.\n";
+    }
+
+    cout<<"\nPressione enter para voltar ao menu principal.....";
+    string pausa;
+    getline(cin,pausa);
+}                                                                           
+
 int main()
 {
     string entradaOpcao;
@@ -284,7 +314,8 @@ int main()
         cout << "2 - Listar produtos (Cardapio)\n";
         cout << "3 - Fazer / atualizar pedido de uma mesa\n";
         cout << "4 - Exibir conta de uma mesa\n";
-        cout << "5 - Sair\n";
+        cout << "5 - Visualizar mesas ocupadas (Com clientes)\n";
+        cout << "6 - Sair\n";
         cout << "Opcao: ";
         getline (cin, entradaOpcao);
         opcao = stoi (entradaOpcao);
@@ -311,6 +342,10 @@ int main()
             break;
 
         case 5:
+            visualizarMesasAtivas();
+            break;
+
+        case 6:
             system("cls");
             cout << "Encerrando o sistema...\n";
             break;
