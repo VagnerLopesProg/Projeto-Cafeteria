@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -143,18 +144,34 @@ void fazerPedido()
 
         for (int i = 0; i < totalprodutos; i++)
         {
-            if (produtos[i].codigo == codigoEscolhido) {
-                int posicaoLivre = mesaAtual.totalitens;
-
-                mesaAtual.itens[posicaoLivre].nome = produtos[i].nome;
-                mesaAtual.itens[posicaoLivre].preco = produtos[i].preco;
-
-                mesaAtual.totalitens++;
-                mesaAtual.totalconta += produtos[i].preco;
-
-                cout << "\n-> " << produtos[i].nome << " adicionado com sucesso a mesa " << numeroMesa << "!\n";
-
+            if(produtos[i].codigo == codigoEscolhido) {
                 produtoEncontrado = true;
+                
+                cout << "Quantidade desejada de [" << produtos[i].nome << "]: ";
+                getline(cin, entrada);
+                int quantidade = stoi(entrada);
+
+                if(quantidade <= 0) {
+                    cout <<"\nQuantidade invalida! O pedido deste item foi cancelado. \n";
+                    break;
+                }
+                if (mesaAtual.totalitens + quantidade > 50) {
+                    cout <<"\nErro! A mesa nao suporta esta quantidade de itens (limite atingido)";
+                    break;
+                }
+                
+                // ADICIONADO E CORRIGIDO: O bloco correto que grava os itens na mesa
+                for (int q = 0; q < quantidade; q++) {
+                    int posicaoLivre = mesaAtual.totalitens;
+                    
+                    mesaAtual.itens[posicaoLivre].nome = produtos[i].nome;
+                    mesaAtual.itens[posicaoLivre].preco = produtos[i].preco;
+                    
+                    mesaAtual.totalitens++;
+                    mesaAtual.totalconta += produtos[i].preco;
+                }
+                
+                cout << "\n-> " << quantidade << "x [" << produtos[i].nome << "] adicionado(s) com sucesso!\n";
                 break;
             }
         }
